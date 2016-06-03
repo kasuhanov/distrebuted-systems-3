@@ -1,7 +1,6 @@
 package ru.xtal;
 
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class ProcceserApplication {
 
 	@PostConstruct
 	public void post(){
-		Jedis jedis = new Jedis("localhost");
+		Jedis jedis = new Jedis("redis://redistogo:4477bf16103cb12b17951d945dbd4834@lab.redistogo.com:9771/");
 		while(true){
 			System.out.println("Waiting for a message in the queue");
 			String message = jedis.blpop(0,"queue").get(1);
@@ -54,7 +53,7 @@ public class ProcceserApplication {
                     }
                     columns += "id)";
                     values += UUID.randomUUID().toString()+"')";
-                    query = "INSERT INTO test ("+columns+" VALUES "+;
+                    query = "INSERT INTO test ("+columns+" VALUES ("+values;
 				    jdbcTemplate.execute(query);
 				}
 				reader.close();
