@@ -51,7 +51,7 @@ public class CsvController {
     @RequestMapping(value = "/upload",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) throws IOException{
-        if(file.getContentType().equalsIgnoreCase("text/csv")){
+        if(file.getOriginalFilename().contains(".csv")){
             File targetFile = new File("downloaded/" + file.getOriginalFilename());
             targetFile.createNewFile();
             FileUtils.copyInputStreamToFile(file.getInputStream(), targetFile);
